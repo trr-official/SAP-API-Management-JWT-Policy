@@ -17,7 +17,7 @@ This policy assumes that Value Maps with the following keys have been set
 
 ## Installation
 
-1. Change folder to the SAML2-JWT-CSRF/POlicyTemplateContainer.
+1. Change folder to the SAML2-JWT-CSRF
 2. Zip complete folder, including the folder structure.
 3. Update the file samlHelper.js with your settings
 4. Upload policy into API Management
