@@ -1,25 +1,24 @@
 # Introduction 
 
-This repository contains all API Management Policies used by TRR.
+This repository contains a policy to call NW backend services from the internet using JWT as authorization tokens, and handling CSRF-TOKENS.
 
-Please use the SAML-JWT-CSRF policy.
+This policy takes alot of inspiration from  https://blogs.sap.com/2019/09/02/part-1-modeling-the-jwt-token-verification-flows-in-sap-cloud-platform-api-management/ and  https://blogs.sap.com/2018/01/19/part-2-single-sign-on-from-fiori-application-to-sap-gateway-via-sap-cloud-platform-api-management/ but have been extended with CSRF Token handling and most settings have been broken out into key vault settings. Please read and understand these two posts before setting up this policy.
 
-# Getting Started
-
-To upload a policy it needs to be zipped.
+# Prerequisits
+This policy assumes that Value Maps with the following keys have been set
+* JWTSettings   
+    * jwksDomain - The domain of the server hosting JWKS
+    * jwksPath - Path to the JWK store
+* SAMLSettings -
+    * keyname - key name of the signing certificate
+    * storename store name of the key store
+    * issuer - issuer in the SAML Response
+    * audience - audience in the SAML response
 
 ## Installation
 
-1. Change folder to the policy you want to upload, e.g ValidateJWT.
+1. Change folder to the SAML2-JWT-CSRF/POlicyTemplateContainer.
 2. Zip complete folder, including the folder structure.
-3. Upload policy into API Management.
-
-## Push changes to git
-
-Unfortunately all policies are exported from API Management as zip files, and then need to be manually added to the git repository.
-
-1. Download template from API Management.
-2. Unzip files into a temporary directory.
-3. If the policy does not exist in the repository, create a folder with a descriptive name.
-4. Copy all files, keeping the folder structure, into the root folder of the repository.
-5. Add a README with the same name as the policy in the root directory. Do not add it into the policy directory as this will break the import into API Management.
+3. Update the file samlHelper.js with your settings
+4. Upload policy into API Management
+5. Apply template to your policy.
