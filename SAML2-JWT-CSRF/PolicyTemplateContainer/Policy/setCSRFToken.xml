@@ -1,0 +1,16 @@
+<!-- This policy can be used to create or modify the standard HTTP request and response messages -->
+<AssignMessage async="false" continueOnError="false" enabled="true" xmlns='http://www.sap.com/apimgmt'>
+    <Remove>
+        <Headers>
+            <Header name="x-csrf-token"/>
+        </Headers>
+    </Remove>
+    <Set>
+        <Headers>
+            <Header name="x-csrf-token">{calloutResponse.header.x-csrf-token}</Header>
+            <Header name="Cookie">{calloutResponse.header.set-cookie.2}</Header>
+        </Headers>
+    </Set>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="false" transport="http" type="request"/>
+</AssignMessage>

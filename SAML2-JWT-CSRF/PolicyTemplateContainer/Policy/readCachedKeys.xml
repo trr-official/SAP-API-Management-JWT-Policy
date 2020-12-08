@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<LookupCache async="false" continueOnError="false" enabled="false" xmlns="http://www.sap.com/apimgmt">
+    <CacheKey>
+        <KeyFragment>JWT_KEYS</KeyFragment>
+    </CacheKey>
+    <Scope>Global</Scope>
+    <AssignTo>JWTKeys.content</AssignTo>
+</LookupCache>

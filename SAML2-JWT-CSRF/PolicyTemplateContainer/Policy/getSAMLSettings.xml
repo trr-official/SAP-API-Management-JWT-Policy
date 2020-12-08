@@ -1,0 +1,31 @@
+<!-- Key/value pairs can be stored, retrieved, and deleted from named existing maps by configuring this policy by specifying PUT, GET, or DELETE operations -->
+<!-- mapIdentifier refers to the name of the key value map -->
+<KeyValueMapOperations mapIdentifier="SAMLSettings" async="true" continueOnError="false" enabled="true" xmlns="http://www.sap.com/apimgmt">
+
+	<Get assignTo="samlSettings.audience" index="1">
+        <Key>
+            <Parameter>audience</Parameter>
+        </Key>
+    </Get>
+    
+	<Get assignTo="samlSettings.issuer" index="1">
+        <Key>
+            <Parameter>issuer</Parameter>
+        </Key>
+    </Get>
+    
+	<Get assignTo="samlSettings.storename" index="1">
+        <Key>
+            <Parameter>storename</Parameter>
+        </Key>
+    </Get>
+    
+	<Get assignTo="samlSettings.keyname" index="1">
+        <Key>
+            <Parameter>keyname</Parameter>
+        </Key>
+    </Get>
+    
+	
+	<Scope>environment</Scope>
+</KeyValueMapOperations>

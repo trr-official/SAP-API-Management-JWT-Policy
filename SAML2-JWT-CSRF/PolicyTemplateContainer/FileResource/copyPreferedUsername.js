@@ -1,0 +1,1 @@
+context.setVariable("preferredUsername", context.getVariable("jwt.verifyJWT.claim.subject"));

@@ -1,0 +1,3 @@
+<Script async="false" continueOnError="false" enabled="true" timeLimit="200" xmlns='http://www.sap.com/apimgmt'>
+	<ResourceURL>py://base64encode.py</ResourceURL>
+</Script>

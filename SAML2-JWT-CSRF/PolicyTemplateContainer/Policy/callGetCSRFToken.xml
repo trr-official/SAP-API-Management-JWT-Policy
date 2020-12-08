@@ -1,0 +1,28 @@
+<!-- this policy lets you call to an external service from your API flow -->
+<ServiceCallout async="true" continueOnError="false" enabled="true" xmlns="http://www.sap.com/apimgmt">
+	<!-- The request that gets sent from the API proxy flow to the external service -->
+	<Request>
+	    <Remove>
+	        <Headers>
+	            <Header name='x-csrf-token'/>
+	        </Headers>
+	    </Remove>
+	    <Set>
+	        <Headers>
+	            <Header name="x-csrf-token">fetch</Header>
+	            <Header name="Authorization">Bearer {clientRequest.jwtToken}</Header>
+	            <Header name="sap-client">{clientRequest.sapClient}</Header>
+	        </Headers>
+	        <Verb>GET</Verb>
+	    </Set>
+	    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+	</Request>
+	<!-- the variable into which the response from the external service should be stored -->
+	<Response>calloutResponse</Response>
+	<!-- The time in milliseconds that the Service Callout policy will wait for a response from the target before exiting. Default value is 120000 ms -->
+	<Timeout>30000</Timeout>
+    <LocalTargetConnection>
+        <APIProxy>Z_RDG_ARENDE_SRV</APIProxy>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </LocalTargetConnection>
+</ServiceCallout>

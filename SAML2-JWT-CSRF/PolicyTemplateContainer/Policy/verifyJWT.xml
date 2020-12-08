@@ -1,0 +1,8 @@
+<!-- Verify JWT Token -->
+<VerifyJWT async="false" continueOnError="false" enabled="true" xmlns="http://www.sap.com/apimgmt">
+    <Algorithm>RS256</Algorithm>
+    <PublicKey>
+    	<JWKS ref="JWTKeys.content"/>
+    </PublicKey>
+    <Issuer ref="jwtSettings.issuer" />
+</VerifyJWT>

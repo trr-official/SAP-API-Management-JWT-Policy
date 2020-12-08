@@ -1,0 +1,38 @@
+resources:
+- repo: self
+name: $(Date:yyyyMMdd)$(Rev:.r)
+trigger:
+  batch: true # batch changes if true, start a new build for every push if false
+  branches:
+    include: [ develop, master ] # branch names which will trigger a build
+  paths:
+    include: [ ] # file paths which must match to trigger a build
+
+
+steps:
+- bash: chmod 755 $(Build.SourcesDirectory)/pipelines/scripts/download.sh
+  displayName: Change permission on script #
+  failOnStderr: #
+
+## Copy the following task for all APIs that should be handled by Azure Devops
+- bash: $(Build.SourcesDirectory)/pipelines/scripts/download.sh Z_INT_ORG_SRV > $(Build.ArtifactStagingDirectory)/z_int_org_srv.zip
+  displayName: Download Z_INT_ORG_SRV #
+  failOnStderr: #
+- bash: $(Build.SourcesDirectory)/pipelines/scripts/download.sh Z_OMSTALLNINGSINSATS_SRV > $(Build.ArtifactStagingDirectory)/z_omstallningsinsats_srv.zip
+  displayName: Download Z_OMSTALLNINGSINSATS_SRV #
+  failOnStderr: #
+- bash: $(Build.SourcesDirectory)/pipelines/scripts/download.sh Z_OR_COMPANY_SRV > $(Build.ArtifactStagingDirectory)/z_or_company_srv.zip
+  displayName: Download Z_OR_COMPANY_SRV #
+  failOnStderr: #
+- bash: $(Build.SourcesDirectory)/pipelines/scripts/download.sh Z_RDG_ARENDE_SRV > $(Build.ArtifactStagingDirectory)/z_rdg_arende_srv.zip
+  displayName: Download Z_RDG_ARENDE_SRV #
+  failOnStderr: #
+- task: CopyFiles@2
+  inputs:
+    targetFolder: $(Build.ArtifactStagingDirectory)
+    overWrite: true
+    contents:  $(Build.SourcesDirectory)/pipelines/scripts/**
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: $(Build.ArtifactStagingDirectory)
+    artifactName: SAP_API_PROXIES  

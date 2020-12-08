@@ -1,0 +1,9 @@
+<!-- This policy can be used to create or modify the standard HTTP request and response messages -->
+<AssignMessage async="false" continueOnError="false" enabled="true" xmlns='http://www.sap.com/apimgmt'>
+	<!-- Sets a new value to the existing parameter -->
+	<Set>
+		<Payload>{sapapim.samlresponse}</Payload>
+	</Set>
+	<IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+	<AssignTo createNew="false" type="request">message</AssignTo>
+</AssignMessage>

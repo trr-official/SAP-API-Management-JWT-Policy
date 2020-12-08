@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PolicyTemplateContainer>
+    <name>SAML2-JWT-CSRF</name>
+    <version>1</version>
+    <title>Verify JWT, create SAML and fetch CSRF</title>
+    <description>Verifies JWT, Creates and attaches SAML2 and fetches CSRF-token from backend</description>
+    <proxyEndPointxml>&lt;preFlow&gt;&lt;name&gt;PreFlow&lt;/name&gt;&lt;request&gt;&lt;isRequest&gt;true&lt;/isRequest&gt;&lt;steps&gt;&lt;step&gt;&lt;policy_name&gt;readCachedKeys&lt;/policy_name&gt;&lt;condition&gt; &lt;/condition&gt;&lt;sequence&gt;5&lt;/sequence&gt;&lt;/step&gt;&lt;step&gt;&lt;policy_name&gt;readJWKS&lt;/policy_name&gt;&lt;condition&gt;lookupcache.readCachedKeys.cachehit = false
+&lt;/condition&gt;&lt;sequence&gt;6&lt;/sequence&gt;&lt;/step&gt;&lt;step&gt;&lt;policy_name&gt;setPreferedUserName&lt;/policy_name&gt;&lt;condition&gt; &lt;/condition&gt;&lt;sequence&gt;9&lt;/sequence&gt;&lt;/step&gt;&lt;step&gt;&lt;policy_name&gt;verifyJWT&lt;/policy_name&gt;&lt;condition&gt; &lt;/condition&gt;&lt;sequence&gt;8&lt;/sequence&gt;&lt;/step&gt;&lt;step&gt;&lt;policy_name&gt;setCSRFToken&lt;/policy_name&gt;&lt;condition&gt; request.verb != "GET"&lt;/condition&gt;&lt;sequence&gt;12&lt;/sequence&gt;&lt;/step&gt;&lt;step&gt;&lt;policy_name&gt;cacheJWKS&lt;/policy_name&gt;&lt;condition&gt;lookupcache.readCachedKeys.cachehit = false&lt;/condition&gt;&lt;sequence&gt;7&lt;/sequence&gt;&lt;/step&gt;&lt;step&gt;&lt;policy_name&gt;extractContentType&lt;/policy_name&gt;&lt;condition&gt; &lt;/condition&gt;&lt;sequence&gt;2&lt;/sequence&gt;&lt;/step&gt;&lt;step&gt;&lt;policy_name&gt;callGetCSRFToken&lt;/policy_name&gt;&lt;condition&gt; request.verb != "GET"&lt;/condition&gt;&lt;sequence&gt;11&lt;/sequence&gt;&lt;/step&gt;&lt;step&gt;&lt;policy_name&gt;getJWTSettings&lt;/policy_name&gt;&lt;condition&gt; &lt;/condition&gt;&lt;sequence&gt;4&lt;/sequence&gt;&lt;/step&gt;&lt;step&gt;&lt;policy_name&gt;extractVerifiedJWT&lt;/policy_name&gt;&lt;condition&gt; &lt;/condition&gt;&lt;sequence&gt;10&lt;/sequence&gt;&lt;/step&gt;&lt;step&gt;&lt;policy_name&gt;raiseUnAuthorizedError&lt;/policy_name&gt;&lt;condition&gt;request.header.authorization = null or request.header.authorization = ""&lt;/condition&gt;&lt;sequence&gt;1&lt;/sequence&gt;&lt;/step&gt;&lt;step&gt;&lt;policy_name&gt;extractSapClient&lt;/policy_name&gt;&lt;condition&gt; &lt;/condition&gt;&lt;sequence&gt;3&lt;/sequence&gt;&lt;/step&gt;&lt;/steps&gt;&lt;/request&gt;&lt;response&gt;&lt;isRequest&gt;false&lt;/isRequest&gt;&lt;steps&gt;&lt;/steps&gt;&lt;/response&gt;&lt;/preFlow&gt;&lt;postFlow&gt;&lt;name&gt;PostFlow&lt;/name&gt;&lt;request&gt;&lt;isRequest&gt;true&lt;/isRequest&gt;&lt;steps&gt;&lt;/steps&gt;&lt;/request&gt;&lt;response&gt;&lt;isRequest&gt;false&lt;/isRequest&gt;&lt;steps&gt;&lt;/steps&gt;&lt;/response&gt;&lt;/postFlow&gt;</proxyEndPointxml>
+    <life_cycle>
+        <changed_by>johan.wigert@trr.se</changed_by>
+        <created_by>johan.wigert@trr.se</created_by>
+    </life_cycle>
+    <targetEndPointxml>&lt;preFlow&gt;&lt;name&gt;PreFlow&lt;/name&gt;&lt;request&gt;&lt;isRequest&gt;true&lt;/isRequest&gt;&lt;steps&gt;&lt;step&gt;&lt;policy_name&gt;encodeSAMLResponse&lt;/policy_name&gt;&lt;condition&gt; &lt;/condition&gt;&lt;sequence&gt;6&lt;/sequence&gt;&lt;/step&gt;&lt;step&gt;&lt;policy_name&gt;generatesamlresponse&lt;/policy_name&gt;&lt;condition&gt; &lt;/condition&gt;&lt;sequence&gt;5&lt;/sequence&gt;&lt;/step&gt;&lt;step&gt;&lt;policy_name&gt;setEncodedSAMLResponse&lt;/policy_name&gt;&lt;condition&gt; &lt;/condition&gt;&lt;sequence&gt;7&lt;/sequence&gt;&lt;/step&gt;&lt;step&gt;&lt;policy_name&gt;removeXmlRootTagFromAssertion&lt;/policy_name&gt;&lt;condition&gt; &lt;/condition&gt;&lt;sequence&gt;4&lt;/sequence&gt;&lt;/step&gt;&lt;step&gt;&lt;policy_name&gt;generatesamlassertion&lt;/policy_name&gt;&lt;condition&gt; &lt;/condition&gt;&lt;sequence&gt;3&lt;/sequence&gt;&lt;/step&gt;&lt;step&gt;&lt;policy_name&gt;setSAMLAssertionValues&lt;/policy_name&gt;&lt;condition&gt; &lt;/condition&gt;&lt;sequence&gt;1&lt;/sequence&gt;&lt;/step&gt;&lt;step&gt;&lt;policy_name&gt;getSAMLSettings&lt;/policy_name&gt;&lt;condition&gt; &lt;/condition&gt;&lt;sequence&gt;2&lt;/sequence&gt;&lt;/step&gt;&lt;/steps&gt;&lt;/request&gt;&lt;response&gt;&lt;isRequest&gt;false&lt;/isRequest&gt;&lt;steps&gt;&lt;/steps&gt;&lt;/response&gt;&lt;/preFlow&gt;&lt;postFlow&gt;&lt;name&gt;PostFlow&lt;/name&gt;&lt;request&gt;&lt;isRequest&gt;true&lt;/isRequest&gt;&lt;steps&gt;&lt;/steps&gt;&lt;/request&gt;&lt;response&gt;&lt;isRequest&gt;false&lt;/isRequest&gt;&lt;steps&gt;&lt;/steps&gt;&lt;/response&gt;&lt;/postFlow&gt;</targetEndPointxml>
+    <policies>
+        <policy type="PopulateCache">cacheJWKS</policy>
+        <policy type="ServiceCallout">callGetCSRFToken</policy>
+        <policy type="Javascript">setPreferedUserName</policy>
+        <policy type="ExtractVariable">extractVerifiedJWT</policy>
+        <policy type="Javascript">setSAMLAssertionValues</policy>
+        <policy type="ExtractVariable">extractContentType</policy>
+        <policy type="AssignMessage">setSAMLMessage</policy>
+        <policy type="ExtractVariable">extractSapClient</policy>
+        <policy type="LookupCache">readCachedKeys</policy>
+        <policy type="ServiceCallout">readJWKS</policy>
+        <policy type="AssignMessage">setCSRFToken</policy>
+        <policy type="Javascript">removeXmlRootTagFromAssertion</policy>
+        <policy type="VerifyJWT">verifyJWT</policy>
+        <policy type="RaiseFault">defaultRaiseFaultPolicy</policy>
+        <policy type="KeyValueMapOperations">getSAMLSettings</policy>
+        <policy type="RaiseFault">raiseUnAuthorizedError</policy>
+        <policy type="AssignMessage">generatesamlresponse</policy>
+        <policy type="PythonScript">encodeSAMLResponse</policy>
+        <policy type="KeyValueMapOperations">getJWTSettings</policy>
+        <policy type="AssignMessage">setEncodedSAMLResponse</policy>
+        <policy type="GenerateSAMLAssertion">generatesamlassertion</policy>
+    </policies>
+    <fileResources>
+        <fileResource type="js">samlHelper</fileResource>
+        <fileResource type="js">xmlTagRemover</fileResource>
+        <fileResource type="js">copyPreferedUsername</fileResource>
+        <fileResource type="py">base64encode</fileResource>
+    </fileResources>
+</PolicyTemplateContainer>

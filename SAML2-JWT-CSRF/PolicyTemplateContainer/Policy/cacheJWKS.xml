@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PopulateCache async="false" continueOnError="false" enabled="false" xmlns="http://www.sap.com/apimgmt">
+    <CacheKey>
+        <KeyFragment>JWT_KEYS</KeyFragment>
+    </CacheKey>
+    <Scope>Global</Scope>
+    <ExpirySettings>
+        <TimeoutInSec>60</TimeoutInSec>
+    </ExpirySettings>
+    <Source>JWTKeys.content</Source>
+</PopulateCache>

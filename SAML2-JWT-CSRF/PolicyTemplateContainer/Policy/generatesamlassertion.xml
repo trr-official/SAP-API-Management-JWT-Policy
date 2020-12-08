@@ -1,0 +1,25 @@
+<GenerateSAMLAssertion async="false" continueOnError="false" enabled="true" ignoreContentType ="true" xmlns="http://www.sap.com/apimgmt">
+	<CanonicalizationAlgorithm />
+   <Issuer ref="samlSettings.issuer"/>
+   <KeyStore>
+      <Name ref="samlSettings.storename"></Name>
+      <Alias ref="samlSettings.keyname"></Alias>
+   </KeyStore>
+	<OutputVariable>
+      <FlowVariable name="sapapim.assertion"/>
+	</OutputVariable>
+	<SignatureAlgorithm />
+	<Subject ref="sapapim.username"/>
+	<Template ignoreUnresolvedVariables="false">
+<![CDATA[
+<saml2:Assertion ID="{saml.id}" IssueInstant="{saml.issueInstant}" Version="2.0"
+        xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"><saml2:Issuer
+        xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">{samlSettings.issuer}</saml2:Issuer><saml2:Subject
+        xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"><saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">{sapapim.username}</saml2:NameID><saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"><saml2:SubjectConfirmationData NotOnOrAfter="{sapapim.notOnorAfter}" Recipient="{sapapim.recipient}"/></saml2:SubjectConfirmation></saml2:Subject><saml2:Conditions NotBefore="{sapapim.notBefore}" NotOnOrAfter="{sapapim.notOnorAfter}"
+        xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"><saml2:AudienceRestriction><saml2:Audience>{samlSettings.audience}</saml2:Audience></saml2:AudienceRestriction></saml2:Conditions><saml2:AuthnStatement AuthnInstant="{sapapim.timestamp}" SessionNotOnOrAfter="{sapapim.notOnorAfter}"
+        xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"><saml2:AuthnContext><saml2:AuthnContextClassRef>urn:none</saml2:AuthnContextClassRef></saml2:AuthnContext></saml2:AuthnStatement>
+</saml2:Assertion>
+                ]]>
+   </Template>
+</GenerateSAMLAssertion>

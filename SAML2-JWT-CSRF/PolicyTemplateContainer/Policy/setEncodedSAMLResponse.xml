@@ -1,0 +1,17 @@
+<!-- This policy can be used to create or modify the standard HTTP request and response messages -->
+<AssignMessage async="false" continueOnError="false" enabled="true" xmlns='http://www.sap.com/apimgmt'>
+ <Remove>
+      <Headers>
+        <Header name="Authorization"/>
+   </Headers>
+  </Remove>
+    <Set>
+      <Headers>
+        <Header name="authorization">SAML2.0 {sapapim.base64SAMLAssertion}</Header>
+        <Header name="Content-Type">{clientRequest.contentType}</Header>
+        <Header name="sap-client">{clientRequest.sapClient}</Header>
+      </Headers>
+    </Set>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="false" transport="http" type="request"/>
+</AssignMessage>
